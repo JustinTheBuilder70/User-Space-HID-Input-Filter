@@ -1,2 +1,8 @@
 # User-Space-HID-Input-Filter
-A user-space input filter that applies custom acceleration curves to mouse input.
+
+This program applies a custom mouse acceleration at the user-space level on Linux-based operating systems.
+
+
+
+
+
