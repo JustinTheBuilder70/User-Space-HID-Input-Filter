@@ -13,7 +13,7 @@ struct Mouse{
         int mouse = open("/dev/input/event2", O_RDONLY); //Open the desired devicce;
         int vmouse = open("/dev/uinput", O_WRONLY | O_NONBLOCK); 
         int t;
-        struct input_event evst = {0};
+        struct input_event evst = {0, 0, 0, 0, 0};
         input_event *ev = &evst; //Where the events live;
         struct uinput_user_dev uidev;
 
@@ -30,9 +30,15 @@ struct Mouse{
 
 
 
-    inline void readev() {
+    inline int readev() {
 
         ssize_t h = read(mouse, ev, sizeof(struct input_event));    
+
+        if (h == -1) {
+            return -4;
+        }
+
+        return 0;
 
     }
 
@@ -149,9 +155,16 @@ struct Mouse{
 
 
     inline void run() {
+
+        int code = 0;
         while (true) {
-        
-            readev();
+            code = readev();
+
+            if (code == -4) {
+                printf("Failed to open device\n");
+                return;
+            }
+            
             checks();
             
         }
