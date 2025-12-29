@@ -30,7 +30,7 @@ struct Mouse{
 
 
 
-    inline int readev() {
+    int readev() {
 
         ssize_t h = read(mouse, ev, sizeof(struct input_event));    
 
@@ -122,14 +122,14 @@ struct Mouse{
     }
 
 
-    inline void destroy() {
+    void destroy() {
         ioctl(vmouse, UI_DEV_DESTROY);
         close(mouse);
         close(vmouse);
     }
 
 
-    inline void checks() {
+    void checks() {
     //determine state, then execute functions if state is matched.
         if (ev -> code == 273) { 
             check_click();
@@ -145,7 +145,7 @@ struct Mouse{
     }   
     
 
-    inline void acceleration() {
+    void acceleration() {
         
         ev -> value = (int)(2.3 * ev -> value);
         
@@ -154,7 +154,7 @@ struct Mouse{
     }
 
 
-    inline void run() {
+    void run() {
 
         int code = 0;
         while (true) {
